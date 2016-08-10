@@ -1,5 +1,7 @@
 # kollector
+
 de novo targeted gene assembly
+
 Do a targeted assembly  using ABySS. The input files are  
 PET sequencing reads which must be a FASTA/FASTQ pair and a 
 seed sequence FASTA file to recruit reads. The input files may be gzipped.
