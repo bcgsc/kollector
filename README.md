@@ -84,7 +84,7 @@ The parameters options are as following:
  `<read1.fa>` and `<read2.fa>` are the PET sequencing reads and could be in a form of FASTA/FASTQ files.
 All the input files could be gzipped.
 ### Running Kollector Iteratively 
-kollector-multiple.sh is a wrapper script for running Kollector iteratively with a large number of targets. After each iteration targets that are successfully assembled are removed from the input, while the failed ones are re-tried in then next iteration with a lower r value. kollector-multiple.sh is run with same arguments as kollector.sh, with two additional parameters:
+`kollector-multiple.sh` is a wrapper script for running Kollector iteratively with a large number of targets. After each iteration targets that are successfully assembled are removed from the input, while the failed ones are re-tried in then next iteration with a lower r value. `kollector-multiple.sh` is run with same arguments as `kollector.sh`, with two additional parameters:
 ```{r} 
     -max_iterations N        number of iterations to be performed [5]
     -decrement N             decrement of the r parameter in each iteration [0.1]
