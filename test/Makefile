@@ -25,11 +25,11 @@ data:=../data
 .DELETE_ON_ERROR:
 .SECONDARY:
 
-all: assembledtargets.fa celegans-kollector.log
+all: DRR008444_1.fastq.gz DRR008444_2.fastq.gz assembledtargets.fa celegans-kollector.log
 
 clean:
 	rm test-kollector.bf test-kollector.txt test-kollector.peak-mem-mb.txt test-kollector.recruited_pe.fastq test-kollector.transcript2assembly.sam hitlist.txt _summary.tsv assembledtargets.fa 
-	rm -r test-kollector.abyss
+
 curl: \
 	DRR008444_1.fastq.gz \
 	DRR008444_2.fatsq.gz
@@ -46,10 +46,10 @@ install-deps:
 
 #Download genomic reads from NCBI
  
-#DRR008444_1.fastq.gz:
-#	curl -o $(data)/DRR008444_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR008/DRR008444/DRR008444_1.fastq.gz
-#DRR008444_2.fastq.gz:
-#	curl -o $(data)/DRR008444_2.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR008/DRR008444/DRR008444_2.fastq.gz
+DRR008444_1.fastq.gz:
+	curl -o $(data)/DRR008444_1.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR008/DRR008444/DRR008444_1.fastq.gz
+DRR008444_2.fastq.gz:
+	curl -o $(data)/DRR008444_2.fastq.gz ftp://ftp.sra.ebi.ac.uk/vol1/fastq/DRR008/DRR008444/DRR008444_2.fastq.gz
 
 #Run kollector.sh
 assembledtargets.fa:
