@@ -59,7 +59,7 @@ Kollector consists of three bash scripts:
 
 To run Kollector simply run :
 
-`./Kollector.sh <params> <seed.fa> <read1.fa> <read2.fa>`
+`./kollector.sh <params> <seed.fa> <read1.fa> <read2.fa>`
 
 
 The parameters options are as following:
@@ -70,7 +70,7 @@ The parameters options are as following:
     -r N      min match length for tagging  reads [0.7]
     -s N      min match length for recruiting reads [0.50]
     -k N      k-mer size for ABySS contig assembly [32]
-    -K N      k-mer size for read overlap detection [50]
+    -K N      k-mer size for read overlap detection [25]
     -n N      max k-mers to recruit in total [10000]
     -o FILE   output file prefix ['kollector']
     -p FILE   Bloom filter containing repeat k-mers for
@@ -83,6 +83,14 @@ The parameters options are as following:
  
  `<read1.fa>` and `<read2.fa>` are the PET sequencing reads and could be in a form of FASTA/FASTQ files.
 All the input files could be gzipped.
+### Running Kollector Iteratively 
+kollector-multiple.sh is a wrapper script for running Kollector iteratively with a large number of targets. After each iteration targets that are successfully assembled are removed from the input, while the failed ones are re-tried in then next iteration with a lower r value. kollector-multiple.sh is run with same arguments as kollector.sh, with two additional parameters:
+```{r} 
+    -max_iterations N        number of iterations to be performed [5]
+    -decrement N             decrement of the r parameter in each iteration [0.1]
+  
+```
+
 
 ### Example : Testing Kollector with C.elegans dataset
 
