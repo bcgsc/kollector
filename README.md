@@ -13,7 +13,7 @@ Kollector is implemented as a bash script and can be run directly from the downl
 
 Kollector requires the following tools:
 
-* [AbySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss)(min v.1.5 )
+* [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss)(min v.1.5 )
 * [BioBloomTools](http://www.bcgsc.ca/platform/bioinfo/software/biobloomtools)
 * [GMAP/GSNAP](http://research-pub.gene.com/gmap)
 * [BWA](http://bio-bwa.sourceforge.net)
@@ -70,7 +70,7 @@ The parameters options are as following:
     -r N      min match length for tagging  reads [0.7]
     -s N      min match length for recruiting reads [0.50]
     -k N      k-mer size for ABySS contig assembly [32]
-    -K N      k-mer size for read overlap detection [50]
+    -K N      k-mer size for read overlap detection [25]
     -n N      max k-mers to recruit in total [10000]
     -o FILE   output file prefix ['kollector']
     -p FILE   Bloom filter containing repeat k-mers for
@@ -87,10 +87,10 @@ All the input files could be gzipped.
 ### Example : Testing Kollector with C.elegans dataset
 
 The `test` folder contains a `Makefile` that runs kollector on C.elegans data set.
-The test C. elegans transcript C17E4.10 FASTA file is provided in `data` folder.
+The test target  C. elegans transcript C17E4.10 FASTA file (Acession NM_060106.6, RefSeq mRNA sequences longer than 1 kb) is provided in `data` folder.
 To run Kollector on C.elegans data set simply run `make` in the test folder. Make sure `linuxbrew` and kollector `bin` directory is on your `PATH` as mentioned in the in `Dependancies` section.
 
 The `Makefile` installs `samtools`,  `biobloomtools`,`abyss`,`gmap-gsnap` and `bwa` via `linuxbrew`.
 Then,it downloads WGS read pairs FASTQ.gz files (SRA Accession: DRR008444,read length:110pb, total number of base pairs:7.5G and 75x raw coverage) to the data folder.
-Finally, it runs kollector with the default parameters mentioned above.
+Finally, it runs kollector pipeline with the default parameters mentioned above. The output of kollector is assembledtargets.fa file. 
 
