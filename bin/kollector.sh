@@ -22,11 +22,11 @@ Options:
     
     -h        show this help message
     -j N      threads [1]
-    -r N      min match length for tagging  reads [50]
+    -r N      min match length for tagging  reads [0.7]
     -s N      min match length for recruiting reads [0.50]
-    -k N      k-mer size for ABySS contig assembly [50]
+    -k N      k-mer size for ABySS contig assembly [32]
     -K N      k-mer size for read overlap detection [25]
-    -n N      max k-mers to recruit in total [25000]
+    -n N      max k-mers to recruit in total [10000]
     -o FILE   output file prefix ['kollector']
     -p FILE   Bloom filter containing repeat k-mers for
               exclusion from scoring calculations; must match
@@ -48,7 +48,7 @@ evaluate=0
 j=1
 k=32
 K=25
-r=50
+r=0.7
 s=0.50
 prefix=kollector
 max_kmers=10000
