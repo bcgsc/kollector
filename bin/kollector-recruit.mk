@@ -16,7 +16,7 @@ j?=1
 # max false positive rate permitted for Bloom filters
 max_fpr?=0.001
 # min match score when recruiting PET reads
-r?=50
+r?=0.7
 #min match score for filtering PET reads
 s?=0.50
 # expected number of Bloom filter elements
