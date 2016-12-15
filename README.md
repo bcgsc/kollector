@@ -19,7 +19,7 @@ Kollector requires the following tools:
 * [BWA](http://bio-bwa.sourceforge.net)
 * [Samtools](http://www.htslib.org/)
 
-The binaries for the above tools are needed to be added to your path.The easiest way to install these tools is to install[linuxbrew](http://linuxbrew.sh/) and add linuxbrew binary to your `PATH`:
+The binaries for the above tools are needed to be added to your path.The easiest way to install these tools is to install [Linuxbrew](http://linuxbrew.sh/) and add linuxbrew binary to your `PATH`:
 
 ```{r}
 export PATH="$HOME/.linuxbrew/bin:$PATH"
@@ -45,6 +45,7 @@ Also,the kollector bin directory needs to be added to your `PATH`:
 export export PATH="$HOME/kollector/bin:$PATH"
 
 ```
+To see an simple example for running Kollector please see the `Example` section below.
 
 ## Running Kollector
 
@@ -83,15 +84,13 @@ The parameters options are as following:
  `<read1.fa>` and `<read2.fa>` are the PET sequencing reads and could be in a form of FASTA/FASTQ files.
 All the input files could be gzipped.
 
-To see a simple example for running Kollector please see the `Example` section below.
-
 ### Example : Testing Kollector with C.elegans dataset
 
-`test` folder contains a `Makefile` that runs kollector on C.elegans dataset.
+The `test` folder contains a `Makefile` that runs kollector on C.elegans data set.
 The test C. elegans transcript C17E4.10 FASTA file is provided in `data` folder.
-To run Kollector on C.elegans dataset simply run `make` in the test folder. Make sure `linuxbrew` and kollector `bin` directory is on your `PATH` as mentioned in the in `Dependancies` section.
+To run Kollector on C.elegans data set simply run `make` in the test folder. Make sure `linuxbrew` and kollector `bin` directory is on your `PATH` as mentioned in the in `Dependancies` section.
 
-The `Makefile` installs `samtools`,  `biobloomtools`,`abyss`,`gmap-gsnap` and `bwa` via linuxbrew.
+The `Makefile` installs `samtools`,  `biobloomtools`,`abyss`,`gmap-gsnap` and `bwa` via `linuxbrew`.
 Then,it downloads WGS read pairs FASTQ.gz files (SRA Accession: DRR008444,read length:110pb, total number of base pairs:7.5G and 75x raw coverage) to the data folder.
-Finally, it runs kollector with the default parametrs mentioned above.
+Finally, it runs kollector with the default parameters mentioned above.
 
