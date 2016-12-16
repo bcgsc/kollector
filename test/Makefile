@@ -36,7 +36,7 @@ curl: \
 
 # Install Dependencies
 
-brew_deps= samtools biobloomtools abyss/1.5.2-k96 gmap-gsnap/2016-05-01 bwa
+brew_deps= samtools biobloomtools abyss gmap-gsnap bwa
 
 deps:
 	@echo $(brew_deps)
