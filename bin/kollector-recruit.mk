@@ -43,10 +43,8 @@ check-params: check-name-param
 ifndef seed
 	$(error missing required param 'seed' (FASTA file))
 endif
-ifndef pe
-	$(error missing required param 'pe' (2 FASTA/FASTQ file(s)))
-endif
 
+# add pe1 pe2 check
 
 #------------------------------------------------------------
 # pipeline rules
@@ -57,9 +55,9 @@ endif
 	samtools faidx $*
 
 # iteratively add PETs with paired matches to Bloom filter
-$(name).bf: $(seed).fai $(pe)
-	biobloommaker -i -k $k -p $(name) -f $(max_fpr) -t $j -n $n -r $r $(if $(subtract),-s $(subtract))  $(seed) $(pe) 
+$(name).bf: $(seed).fai  $(pe1) $(pe2)
+	biobloommaker -i -k $k -p $(name) -f $(max_fpr) -t $j -n $n -r $r $(if $(subtract),-s $(subtract))  $(seed) <(zcat $(pe1)) <(zcat $(pe2))
 		
 #filter PET reads with built BF
-$(name).recruited_pe.fastq: $(name).bf $(pe)
-	biobloomcategorizer -t $j -d $(name) -f $(name).bf -s $s -e -i $(pe) >> $@	
+$(name).recruited_pe.fastq: $(name).bf $(pe1) $(pe2)
+	biobloomcategorizer -t $j -d $(name) -f $(name).bf -s $s -e -i <(zcat $(pe1)) <(zcat $(pe2)) >> $@	

@@ -159,10 +159,9 @@ start_mem_logging
 #------------------------------------------------------------
 # Recruit PET reads
 #------------------------------------------------------------
-
-
- time_command kollector-recruit.mk name=$prefix seed=$seed pe="$pet1 $pet2" s=$s r=$r n=$max_kmers j=$j k=$K ${p+subtract=$p} 
-
+echo $pet1 
+echo $pet2
+time_command kollector-recruit.mk name=$prefix seed=$seed pe1="$pet1" pe2="$pet2" s=$s r=$r n=$max_kmers j=$j k=$K ${p+subtract=$p} 
 
 update_peak_disk_usage
 
