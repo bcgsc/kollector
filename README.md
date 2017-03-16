@@ -103,5 +103,5 @@ Then,it downloads WGS read pairs FASTQ.gz files (SRA Accession: DRR008444,read l
 Finally, it runs kollector pipeline with the default parameters mentioned above. The output of kollector is assembledtargets.fa file. 
 
 ### Citing Kollector
-If you find KOllector useful in your work please cit:
+If you find Kollector useful in your work please cite:
 Erdi Kucuk, Justin Chu, Benjamin P. Vandervalk, S. Austin Hammond, René L. Warren, Inanc Birol; Kollector: transcript-informed, targeted de novo assembly of gene loci. Bioinformatics 2017 btx078. doi: 10.1093/bioinformatics/btx078
