@@ -102,3 +102,6 @@ The `Makefile` installs `samtools`,  `biobloomtools`,`abyss`,`gmap-gsnap` and `b
 Then,it downloads WGS read pairs FASTQ.gz files (SRA Accession: DRR008444,read length:110pb, total number of base pairs:7.5G and 75x raw coverage) to the data folder.
 Finally, it runs kollector pipeline with the default parameters mentioned above. The output of kollector is assembledtargets.fa file. 
 
+### Citing Kollector
+If you find KOllector useful in your work please cit:
+Erdi Kucuk, Justin Chu, Benjamin P. Vandervalk, S. Austin Hammond, René L. Warren, Inanc Birol; Kollector: transcript-informed, targeted de novo assembly of gene loci. Bioinformatics 2017 btx078. doi: 10.1093/bioinformatics/btx078
