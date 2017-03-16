@@ -179,7 +179,7 @@ heading "Running ABySS assembly..."
 abyss_dir=$prefix.abyss
 abyss_input=../$prefix.recruited_pe.fastq
 mkdir -p $abyss_dir
-time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=../$seed
+time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=$seed
 
 abyss_fa=$abyss_dir/$prefix-10.fa 
 
