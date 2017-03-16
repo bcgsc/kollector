@@ -1,15 +1,15 @@
-#**Kollector**
+# Kollector
 
 **_de novo_ Targeted Gene Assembly**
 
 Kollector is a targeted assembly tool using [BioBloom Tools](http://www.bcgsc.ca/platform/bioinfo/software/biobloomtools) and [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss).
 
 
-###Installation
+### Installation
 
 Kollector is implemented as a bash script and can be run directly from the downloaded github repo.
 
-###Dependencies 
+### Dependencies 
 
 Kollector requires the following tools:
 
