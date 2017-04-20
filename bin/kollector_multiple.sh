@@ -44,22 +44,24 @@ set -eu -o pipefail
 #------------------------------------------------------------
 
 # default values for options
+a=0
 align=0
 evaluate=0
 j=1
 k=32
 K=25
 r=0.7
-s=0.50
-prefix=kollector
-max_kmers=10000
+s=0.5
+o=kollector
+n=10000
 help=0
-decrement=10
+d=0.10
 max_iterations=5
-# parse command line options
-while getopts :aA:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
+
+#parse command line options
+while getopts a:A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
 	case $opt in
-		a) align=1;;
+		a) a=$OPTARG;;
 		A) abyss_opt="$OPTARG";;
 		C) clean=0;;
 		d) decrement=$OPTARG;;
@@ -73,10 +75,10 @@ while getopts :aA:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
 		r) r=$OPTARG;;
 		s) s=$OPTARG;;
 		m) max_iterations=$OPTARG;;
-		n) max_kmers=$OPTARG;;
-		o) prefix=$OPTARG;;
+		n) n=$OPTARG;;
+		o) o=$OPTARG;;
 		p) p=$OPTARG;;
-		
+
 		\?) echo "$PROGRAM: invalid option: $OPTARG"; exit 1;;
 	esac
 done
@@ -97,31 +99,32 @@ fi
 
 seed=$1; shift;
 pet1=$1; shift;
-pet2=$1; shift;
+pet2=$1; shift
 
 for i in $(seq 1 $max_iterations)
 do
 if [ "$i" = 1 ]
 then
 prevr=$r
-mkdir iteration.$i
+mkdir -p iteration.$i
 cd iteration.$i
-kollector.sh $seed $pet1 $pet2 j=$j k=$k K=$K r=$r s=$s p=$p max_kmers=$max_kmers p= prefix=$prefix
+kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -a$a $seed $pet1 $pet2
 cut -f1 -d " " hitlist.txt|sort|uniq > succeedtranscripts.txt
 grep ">" $seed | sed 's/>//g' >alltranscripts.txt
 grep -w -v -f succeedtranscripts.txt alltranscripts.txt|xargs samtools faidx $seed > failedtranscripts.fa
 cd ..
 else
-newr=$prevr-$decrement
+newr=`echo $prevr-$decrement | bc -l`
 prevr=$newr
-previ=$i-1
-mkdir iteration.$i
+previ=$(($i-1))
+mkdir -p iteration.$i
 cd iteration.$i
-cp ../iteration.$previ/failedtranscripts.fa >prevfailed.fa
-samtools faidx prevfailed.fa
-kollector.sh prevfailed.fa $pet1 $pet2 j=$j k=$k K=$K r=$newr s=$s p=$p max_kmers=$max_kmers prefix=$prefix
+cp -a ../iteration.$previ/failedtranscripts.fa prevfailed.fa
+seed_new="$(pwd)"/prevfailed.fa
+kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -a$a $seed_new $pet1 $pet2
+cut -f1 -d " " hitlist.txt|sort|uniq > succeedtranscripts.txt
 grep ">" prevfailed.fa | sed 's/>//g' >alltranscripts.txt
 grep -w -v -f succeedtranscripts.txt alltranscripts.txt|xargs samtools faidx prevfailed.fa > failedtranscripts.fa
+cd ..
 fi
 done
-
