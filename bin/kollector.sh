@@ -18,7 +18,6 @@ seed sequence FASTA file to recruit reads. The input files may be gzipped.
 AbySS(1.5+),BioBloom Tools and GMAP should be in your path.
 
 Options:
-
     
     -h        show this help message
     -j N      threads [1]
@@ -31,9 +30,7 @@ Options:
     -p FILE   Bloom filter containing repeat k-mers for
               exclusion from scoring calculations; must match
               k-mer size selected with -K opt [disabled]
-    ########################################################
     -a N      pass bloom filter size to abyss 2.0.2 (B option, to be written: ex - 100M)
-
 
 HEREDOC
 
@@ -56,7 +53,7 @@ max_kmers=10000
 help=0
 
 # parse command line options
-while getopts a::A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
+while getopts a:A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
 	case $opt in
 		a) a=$OPTARG;;
 		A) abyss_opt="$OPTARG";;
@@ -179,7 +176,7 @@ heading "Running ABySS assembly..."
 abyss_dir=$prefix.abyss
 abyss_input=../$prefix.recruited_pe.fastq
 mkdir -p $abyss_dir
-time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=$seed B=$a B=$a H=4 kc=3
+time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=$seed B=$a H=4 kc=3
 
 abyss_fa=$abyss_dir/$prefix-10.fa
 
