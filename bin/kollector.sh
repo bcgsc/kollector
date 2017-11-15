@@ -31,7 +31,8 @@ Options:
     -p FILE   Bloom filter containing repeat k-mers for
               exclusion from scoring calculations; must match
               k-mer size selected with -K opt [disabled]
-    
+    ########################################################
+    -a N      pass bloom filter size to abyss 2.0.2 (B option, to be written: ex - 100M)
 
 
 HEREDOC
@@ -55,9 +56,9 @@ max_kmers=10000
 help=0
 
 # parse command line options
-while getopts :aA:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
+while getopts a::A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
 	case $opt in
-		a) align=1;;
+		a) a=$OPTARG;;
 		A) abyss_opt="$OPTARG";;
 		C) clean=0;;
 		d) mpet_dist=$OPTARG;;
@@ -159,10 +160,9 @@ start_mem_logging
 #------------------------------------------------------------
 # Recruit PET reads
 #------------------------------------------------------------
-
-
- time_command kollector-recruit.mk name=$prefix seed=$seed pe="$pet1 $pet2" s=$s r=$r n=$max_kmers j=$j k=$K ${p+subtract=$p} 
-
+echo $pet1 
+echo $pet2
+time_command kollector-recruit.mk name=$prefix seed=$seed pe1="$pet1" pe2="$pet2" s=$s r=$r n=$max_kmers j=$j k=$K ${p+subtract=$p} 
 
 update_peak_disk_usage
 
@@ -179,9 +179,9 @@ heading "Running ABySS assembly..."
 abyss_dir=$prefix.abyss
 abyss_input=../$prefix.recruited_pe.fastq
 mkdir -p $abyss_dir
-time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=$seed
+time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=$seed B=$a B=$a H=4 kc=3
 
-abyss_fa=$abyss_dir/$prefix-10.fa 
+abyss_fa=$abyss_dir/$prefix-10.fa
 
 update_peak_disk_usage
 
@@ -197,5 +197,3 @@ update_peak_disk_usage
 
 
 stop_mem_logging
-
-
