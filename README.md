@@ -42,7 +42,7 @@ brew install abyss
 Also,the kollector bin directory needs to be added to your `PATH`:
 
 ```{r}
-export export PATH="$HOME/kollector/bin:$PATH"
+export PATH="$HOME/kollector/bin:$PATH"
 
 ```
 To see an simple example for running Kollector please see the `Example` section below.
