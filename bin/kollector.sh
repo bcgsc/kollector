@@ -30,7 +30,8 @@ Options:
     -p FILE   Bloom filter containing repeat k-mers for
               exclusion from scoring calculations; must match
               k-mer size selected with -K opt [disabled]
-    -a N      pass bloom filter size to abyss 2.0.2 (B option, to be written: ex - 100M)
+    -B N      pass bloom filter size to abyss 2.0.2 
+              (B option, to be written: ex - 100M, optional)
 
 HEREDOC
 
@@ -179,8 +180,12 @@ heading "Running ABySS assembly..."
 abyss_dir=$prefix.abyss
 abyss_input=../$prefix.recruited_pe.fastq
 mkdir -p $abyss_dir
-time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input  long='longlib' longlib=$seed B=$a H=4 kc=3
-
+if [ -z ${B+x} ]
+then
+	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=$seed
+else
+	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=$seed B=$B H=4 kc=3
+fi
 abyss_fa=$abyss_dir/$prefix-10.fa
 
 update_peak_disk_usage
