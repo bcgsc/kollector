@@ -182,9 +182,9 @@ abyss_input=../$prefix.recruited_pe.fastq
 mkdir -p $abyss_dir
 if [ -z ${B+x} ]
 then
-	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=$seed
+	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=../$seed
 else
-	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=$seed B=$B H=4 kc=3
+	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=../$seed B=$B H=4 kc=3
 fi
 abyss_fa=$abyss_dir/$prefix-10.fa
 
