@@ -19,32 +19,23 @@ Kollector requires the following tools:
 * [BWA](http://bio-bwa.sourceforge.net)
 * [Samtools](http://www.htslib.org/)
 
-The binaries for the above tools are needed to be added to your path.The easiest way to install these tools is to install [Linuxbrew](http://linuxbrew.sh/) and add linuxbrew binary to your `PATH`:
+The binaries for the above tools are needed to be added to your path. The easiest way to install these tools is to install [Linuxbrew](http://linuxbrew.sh/) and add linuxbrew binary to your `PATH`:
 
-```{r}
+```{bash}
 export PATH="$HOME/.linuxbrew/bin:$PATH"
-
 ```
 
 Installing any package will be as easy as:
 
-```{r}
+```{bash}
 brew install (package name)
-
 ```
 For example to install ABySS run:
 
-```{r}
+```{bash}
 brew install abyss
-
 ```
 
-Also,the kollector bin directory needs to be added to your `PATH`:
-
-```{r}
-export PATH="$HOME/kollector/bin:$PATH"
-
-```
 To see an simple example for running Kollector please see the `Example` section below.
 
 ## Running Kollector
@@ -101,6 +92,15 @@ To run Kollector on C.elegans data set simply run `make` in the test folder. Mak
 The `Makefile` installs `samtools`,  `biobloomtools`,`abyss`,`gmap-gsnap` and `bwa` via `linuxbrew`.
 Then,it downloads WGS read pairs FASTQ.gz files (SRA Accession: DRR008444,read length:110pb, total number of base pairs:7.5G and 75x raw coverage) to the data folder.
 Finally, it runs kollector pipeline with the default parameters mentioned above. The output of kollector is assembledtargets.fa file. 
+
+### Troubleshooting
+
+Kollector.sh is expected to be run with its relative path to the other scripts and it 
+should autodetect your path and add it during runtime. If you get errors related to 
+missing scripts you can add the kollector bin directory directly to be added to your `PATH`:
+```{bash}
+export PATH="$HOME/kollector/bin:$PATH"
+```
 
 ### Citing Kollector
 If you find Kollector useful in your work please cite:

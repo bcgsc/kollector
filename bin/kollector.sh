@@ -149,6 +149,9 @@ function time_command() {
 # Start up
 #------------------------------------------------------------
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export PATH=$DIR:$PATH
+
 heading "Recruiting a maximum of $max_kmers k-mers"
 start_time=$(date +%s)
 peak_disk_usage=0
