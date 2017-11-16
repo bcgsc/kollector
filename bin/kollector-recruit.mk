@@ -56,8 +56,8 @@ endif
 
 # iteratively add PETs with paired matches to Bloom filter
 $(name).bf: $(seed).fai  $(pe1) $(pe2)
-	biobloommaker -i -k $k -p $(name) -f $(max_fpr) -t $j -n $n -r $r $(if $(subtract),-s $(subtract))  $(seed) <(zcat $(pe1)) <(zcat $(pe2))
+	biobloommaker -i -k $k -p $(name) -f $(max_fpr) -t $j -n $n -r $r $(if $(subtract),-s $(subtract))  $(seed) <(zcat -f -- $(pe1)) <(zcat -f -- $(pe2))
 		
 #filter PET reads with built BF
 $(name).recruited_pe.fastq: $(name).bf $(pe1) $(pe2)
-	biobloomcategorizer -t $j -d $(name) -f $(name).bf -s $s -e -i <(zcat $(pe1)) <(zcat $(pe2)) >> $@	
+	biobloomcategorizer -t $j -d $(name) -f $(name).bf -s $s -e -i <(zcat -f -- $(pe1)) <(zcat -f -- $(pe2)) >> $@	
