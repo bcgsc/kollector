@@ -40,10 +40,10 @@ if [ -z $num3 ];then num3=0;fi
 num4=$(echo "$num3+$num2"|bc)
 echo "scale=2;$num1/$num4"|bc
 done<allcigarseq.txt>allcoverages.txt
-paste allcoverages.txt allcleanmapped.sam >allcoveredmapped.sam
-awk '{ if ($1>=0.90) print $2,$4;}' allcoveredmapped.sam > hitlist.txt
+paste allcoverages.txt allcleanmapped.sam > allcoveredmapped.sam
+awk '{ if ($1>=0.90) print $2,$4;}' allcoveredmapped.sam > $1_hitlist.txt
 rm allcoveredmapped.sam allcleanmapped.sam allcigarseq.txt allcoverages.txt allnames.txt
 samtools faidx $contigs
-cut -f2 -d " " hitlist.txt|sort|uniq|xargs samtools faidx $contigs > assembledtargets.fa
+cut -f2 -d " " hitlist.txt|sort|uniq|xargs samtools faidx $contigs > $1_assembledtargets.fa
 
 

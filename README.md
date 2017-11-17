@@ -81,17 +81,19 @@ All the input files could be gzipped.
     -decrement N             decrement of the r parameter in each iteration [0.1]
   
 ```
-
+Using the OutputPrefix_assembledtargets.fa and OutputPrefix_hitlist.txt you can assocate 
+successful assembly targets with each bait sequence.
 
 ### Example : Testing Kollector with C.elegans dataset
 
 The `test` folder contains a `Makefile` that runs kollector on C.elegans data set.
 The test target  C. elegans transcript C17E4.10 FASTA file (Acession NM_060106.6, RefSeq mRNA sequences longer than 1 kb) is provided in `data` folder.
-To run Kollector on C.elegans data set simply run `make` in the test folder. Make sure `linuxbrew` and kollector `bin` directory is on your `PATH` as mentioned in the in `Dependancies` section.
+To run Kollector on C.elegans data set simply run `make` in the test folder. Make sure `linuxbrew` 
+is on your `PATH` as mentioned in the in `Dependancies` section.
 
 The `Makefile` installs `samtools`,  `biobloomtools`,`abyss`,`gmap-gsnap` and `bwa` via `linuxbrew`.
 Then,it downloads WGS read pairs FASTQ.gz files (SRA Accession: DRR008444,read length:110pb, total number of base pairs:7.5G and 75x raw coverage) to the data folder.
-Finally, it runs kollector pipeline with the default parameters mentioned above. The output of kollector is assembledtargets.fa file. 
+Finally, it runs kollector pipeline with the default parameters mentioned above. The output of kollector is test-kollector_assembledtargets.fa file. 
 
 ### Troubleshooting
 
