@@ -81,8 +81,7 @@ All the input files could be gzipped.
     -decrement N             decrement of the r parameter in each iteration [0.1]
   
 ```
-Using the OutputPrefix_assembledtargets.fa and OutputPrefix_hitlist.txt you can assocate 
-successful assembly targets with each bait sequence.
+By using the `output file prefix`_assembledtargets.fa is the primary output and the `output file prefix`_hitlist.txt can tell you which successfully assembled targets assocate to each bait sequence.
 
 ### Example : Testing Kollector with C.elegans dataset
 
