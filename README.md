@@ -13,8 +13,10 @@ Kollector is implemented as a bash script and can be run directly from the downl
 
 Kollector requires the following tools:
 
-* [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss)(min v.1.5 )
-* [BioBloomTools](http://www.bcgsc.ca/platform/bioinfo/software/biobloomtools)
+* [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss)(min v1.5.x, tested on 
+  2.0.3 )
+* [BioBloomTools](http://www.bcgsc.ca/platform/bioinfo/software/biobloomtools) (tested 
+  on v2.0.12)
 * [GMAP/GSNAP](http://research-pub.gene.com/gmap)
 * [BWA](http://bio-bwa.sourceforge.net)
 * [Samtools](http://www.htslib.org/)
@@ -58,7 +60,9 @@ The parameters options are as following:
 ```{r} 
     -h        show this help message
     -j N      threads [1]
-    -r N      min match length for tagging  reads [0.7]
+    -r N      min match length for tagging reads. Decimal value are
+              the proportion of the valid k-mers and integer values
+              will require that minimum number of bases to match [0.7]
     -s N      min match length for recruiting reads [0.50]
     -k N      k-mer size for ABySS contig assembly [32]
     -K N      k-mer size for read overlap detection [25]
@@ -67,6 +71,8 @@ The parameters options are as following:
     -p FILE   Bloom filter containing repeat k-mers for
               exclusion from scoring calculations; must match
               k-mer size selected with -K opt [disabled]
+    -B N      pass bloom filter size to abyss 2.0.2 
+              (B option, to be written: ex - 100M, optional)
 ```
 
 
@@ -74,6 +80,9 @@ The parameters options are as following:
  
  `<read1.fa>` and `<read2.fa>` are the PET sequencing reads and could be in a form of FASTA/FASTQ files.
 All the input files can be gzipped.
+
+The `-r` and `-s` parameters may be integer values if exact match lengths of the reads are desired rather than k-mer proportions during read tagging or recruitment.
+
 ### Running Kollector Iteratively 
 `kollector-multiple.sh` is a wrapper script for running Kollector iteratively with a large number of targets. After each iteration targets that are successfully assembled are removed from the input, while the failed ones are re-tried in then next iteration with a lower r value. `kollector-multiple.sh` is run with same arguments as `kollector.sh`, with two additional parameters:
 ```{r} 

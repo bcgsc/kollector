@@ -21,7 +21,9 @@ Options:
     
     -h        show this help message
     -j N      threads [1]
-    -r N      min match length for tagging  reads [0.7]
+    -r N      min match length for tagging reads. Decimal value are
+              the proportion of the valid k-mers and integer values
+              will require that minimum number of bases to match [0.7]
     -s N      min match length for recruiting reads [0.50]
     -k N      k-mer size for ABySS contig assembly [32]
     -K N      k-mer size for read overlap detection [25]
