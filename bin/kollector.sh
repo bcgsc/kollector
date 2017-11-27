@@ -160,12 +160,16 @@ start_time=$(date +%s)
 peak_disk_usage=0
 start_mem_logging
 
+#symlink files
+seed_symlink="${prefix}_reference.fa"
+ln -s -f $seed $seed_symlink
+
 #------------------------------------------------------------
 # Recruit PET reads
 #------------------------------------------------------------
 echo $pet1 
 echo $pet2
-time_command kollector-recruit.mk name=$prefix seed=$seed pe1="$pet1" pe2="$pet2" s=$s r=$r n=$max_kmers j=$j k=$K ${p+subtract=$p} 
+time_command kollector-recruit.mk name=$prefix seed=$seed_symlink pe1="$pet1" pe2="$pet2" s=$s r=$r n=$max_kmers j=$j k=$K ${p+subtract=$p} 
 
 update_peak_disk_usage
 
@@ -184,9 +188,9 @@ abyss_input=../$prefix.recruited_pe.fastq
 mkdir -p $abyss_dir
 if [ -z ${B+x} ]
 then
-	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=../$seed
+	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=../$seed_symlink
 else
-	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=../$seed B=$B H=4 kc=3
+	time_command abyss-pe -C $abyss_dir v=-v k=$k name=$prefix np=$j  lib='pet' pet=$abyss_input long='longlib' longlib=../$seed_symlink B=$B H=4 kc=3
 fi
 abyss_fa=$abyss_dir/$prefix-10.fa
 
