@@ -57,6 +57,7 @@ n=10000
 help=0
 d=0.10
 max_iterations=5
+decrement=0.1
 
 #parse command line options
 while getopts a:A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
@@ -101,30 +102,49 @@ seed=$1; shift;
 pet1=$1; shift;
 pet2=$1; shift
 
-for i in $(seq 1 $max_iterations)
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+export PATH=$DIR:$PATH
+
+#symlink files
+seed_symlink="${o}_reference.fa"
+ln -s -f $seed $seed_symlink
+
+for i in $(seq 1 $max_iterations) 
 do
 if [ "$i" = 1 ]
 then
-prevr=$r
-mkdir -p iteration.$i
-cd iteration.$i
-kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -a$a $seed $pet1 $pet2
-cut -f1 -d " " hitlist.txt|sort|uniq > succeedtranscripts.txt
-grep ">" $seed | sed 's/>//g' >alltranscripts.txt
-grep -w -v -f succeedtranscripts.txt alltranscripts.txt|xargs samtools faidx $seed > failedtranscripts.fa
-cd ..
+	echo "Iteration ${i}"
+	prevr=$r
+	mkdir -p iteration.$i
+	cd iteration.$i
+	if [ -z ${p+x} ]
+	then
+	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -a$a ../$seed_symlink $pet1 $pet2
+	else
+	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -a$a ../$seed_symlink $pet1 $pet2
+	fi
+	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
+	grep ">" ../$seed_symlink | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
+	grep -w -v -f ${o}_succeedtranscripts.txt ${o}_alltranscripts.txt | xargs samtools faidx ../$seed_symlink > ${o}_failedtranscripts.fa
+	cd ..
 else
-newr=`echo $prevr-$decrement | bc -l`
-prevr=$newr
-previ=$(($i-1))
-mkdir -p iteration.$i
-cd iteration.$i
-cp -a ../iteration.$previ/failedtranscripts.fa prevfailed.fa
-seed_new="$(pwd)"/prevfailed.fa
-kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -a$a $seed_new $pet1 $pet2
-cut -f1 -d " " hitlist.txt|sort|uniq > succeedtranscripts.txt
-grep ">" prevfailed.fa | sed 's/>//g' >alltranscripts.txt
-grep -w -v -f succeedtranscripts.txt alltranscripts.txt|xargs samtools faidx prevfailed.fa > failedtranscripts.fa
-cd ..
+	echo "Iteration ${i}"
+	newr=`echo $prevr-$decrement | bc -l`
+	prevr=$newr
+	previ=$(($i-1))
+	mkdir -p iteration.$i
+	cd iteration.$i
+	cp -a ../iteration.$previ/${o}_failedtranscripts.fa ${o}_prevfailed.fa
+	seed_new="$(pwd)"/${o}_prevfailed.fa
+	if [ -z ${p+x} ]
+	then
+	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -n$n -o$o -a$a $seed_new $pet1 $pet2
+	else
+	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -a$a $seed_new $pet1 $pet2
+	fi
+	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
+	grep ">" ${o}_prevfailed.fa | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
+	grep -w -v -f ${o}_succeedtranscripts.txt ${o}_alltranscripts.txt|xargs samtools faidx ${o}_prevfailed.fa > ${o}_failedtranscripts.fa
+	cd ..
 fi
 done
