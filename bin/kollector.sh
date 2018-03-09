@@ -56,10 +56,10 @@ max_kmers=10000
 help=0
 
 # parse command line options
-while getopts a:A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
+while getopts A:B:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
 	case $opt in
-		a) a=$OPTARG;;
 		A) abyss_opt="$OPTARG";;
+		B) B=$OPTARG;;
 		C) clean=0;;
 		d) mpet_dist=$OPTARG;;
 		e) evaluate=1;;
