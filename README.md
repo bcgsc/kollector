@@ -15,8 +15,8 @@ Kollector requires the following tools:
 
 * [ABySS](http://www.bcgsc.ca/platform/bioinfo/software/abyss)(min v1.5.x, tested on 
   2.0.3 )
-* [BioBloomTools](http://www.bcgsc.ca/platform/bioinfo/software/biobloomtools) (tested 
-  on v2.0.12)
+* [BioBloomTools](http://www.bcgsc.ca/platform/bioinfo/software/biobloomtools) (min 
+  v2.1.x)
 * [GMAP/GSNAP](http://research-pub.gene.com/gmap)
 * [BWA](http://bio-bwa.sourceforge.net)
 * [Samtools](http://www.htslib.org/)
