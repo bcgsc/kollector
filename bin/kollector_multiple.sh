@@ -33,6 +33,8 @@ Options:
               k-mer size selected with -K opt [disabled]
     -max_iterations N  number of iterations to be performed [5]
     -decrement N       decrement of the r parameter in each iteration [0.1]
+    -B N      pass bloom filter size to abyss 2.0.2 
+              (B option, to be written: ex - 100M, optional)
 
 
 HEREDOC
@@ -44,7 +46,7 @@ set -eu -o pipefail
 #------------------------------------------------------------
 
 # default values for options
-a=0
+B=0
 align=0
 evaluate=0
 j=1
@@ -60,9 +62,9 @@ max_iterations=5
 decrement=0.1
 
 #parse command line options
-while getopts a:A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
+while getopts B:A:d:eg:hH:Cj:k:K:r:s:m:n:o:p: opt; do
 	case $opt in
-		a) a=$OPTARG;;
+		B) B=$OPTARG;;
 		A) abyss_opt="$OPTARG";;
 		C) clean=0;;
 		d) decrement=$OPTARG;;
@@ -119,9 +121,9 @@ then
 	cd iteration.$i
 	if [ -z ${p+x} ]
 	then
-	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -a$a ../$seed_symlink $pet1 $pet2
+	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
 	else
-	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -a$a ../$seed_symlink $pet1 $pet2
+	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
 	fi
 	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
 	grep ">" ../$seed_symlink | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
@@ -138,9 +140,9 @@ else
 	seed_new="$(pwd)"/${o}_prevfailed.fa
 	if [ -z ${p+x} ]
 	then
-	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -n$n -o$o -a$a $seed_new $pet1 $pet2
+	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -n$n -o$o -B$B $seed_new $pet1 $pet2
 	else
-	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -a$a $seed_new $pet1 $pet2
+	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -B$B $seed_new $pet1 $pet2
 	fi
 	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
 	grep ">" ${o}_prevfailed.fa | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
