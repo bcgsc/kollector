@@ -121,9 +121,19 @@ then
 	cd iteration.$i
 	if [ -z ${p+x} ]
 	then
-	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
+		if [ -z ${B+x} ]
+		then
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
+		else
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o ../$seed_symlink $pet1 $pet2
+		fi
 	else
-	kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
+		if [ -z ${B+x} ]
+		then
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
+		else
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o ../$seed_symlink $pet1 $pet2
+		fi
 	fi
 	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
 	grep ">" ../$seed_symlink | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
@@ -140,9 +150,19 @@ else
 	seed_new="$(pwd)"/${o}_prevfailed.fa
 	if [ -z ${p+x} ]
 	then
-	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -n$n -o$o -B$B $seed_new $pet1 $pet2
+		if [ -z ${B+x} ]
+		then
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B $seed_new $pet1 $pet2
+		else
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o $seed_new $pet1 $pet2
+		fi
 	else
-	kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -B$B $seed_new $pet1 $pet2
+		if [ -z ${B+x} ]
+		then
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B $seed_new $pet1 $pet2
+		else
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o $seed_new $pet1 $pet2
+		fi
 	fi
 	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
 	grep ">" ${o}_prevfailed.fa | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
