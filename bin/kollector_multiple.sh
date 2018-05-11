@@ -123,16 +123,16 @@ then
 	then
 		if [ -z ${B+x} ]
 		then
-			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
-		else
 			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o ../$seed_symlink $pet1 $pet2
+		else
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
 		fi
 	else
 		if [ -z ${B+x} ]
 		then
-			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
-		else
 			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o ../$seed_symlink $pet1 $pet2
+		else
+			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
 		fi
 	fi
 	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
@@ -152,16 +152,16 @@ else
 	then
 		if [ -z ${B+x} ]
 		then
-			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o -B$B $seed_new $pet1 $pet2
+			kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -n$n -o$o $seed_new $pet1 $pet2
 		else
-			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -n$n -o$o $seed_new $pet1 $pet2
+			kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -n$n -o$o -B$B $seed_new $pet1 $pet2
 		fi
 	else
 		if [ -z ${B+x} ]
 		then
-			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B $seed_new $pet1 $pet2
+			kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o $seed_new $pet1 $pet2
 		else
-			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o $seed_new $pet1 $pet2
+			kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -B$B $seed_new $pet1 $pet2
 		fi
 	fi
 	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
