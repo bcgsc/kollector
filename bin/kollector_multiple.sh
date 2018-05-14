@@ -135,7 +135,7 @@ then
 			kollector.sh -j$j -d$d -k$k -K$K -r$r -s$s -p$p -n$n -o$o -B$B ../$seed_symlink $pet1 $pet2
 		fi
 	fi
-	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
+	cut -f1 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
 	grep ">" ../$seed_symlink | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
 	grep -w -v -f ${o}_succeedtranscripts.txt ${o}_alltranscripts.txt | xargs samtools faidx ../$seed_symlink > ${o}_failedtranscripts.fa
 	cd ..
@@ -164,7 +164,7 @@ else
 			kollector.sh -j$j -d$d -k$k -K$K -r$newr -s$s -p$p -n$n -o$o -B$B $seed_new $pet1 $pet2
 		fi
 	fi
-	cut -f2 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
+	cut -f1 -d " " ${o}_hitlist.txt|sort|uniq > ${o}_succeedtranscripts.txt
 	grep ">" ${o}_prevfailed.fa | sed 's/>//g' | sed 's/\s.*//g' > ${o}_alltranscripts.txt
 	grep -w -v -f ${o}_succeedtranscripts.txt ${o}_alltranscripts.txt|xargs samtools faidx ${o}_prevfailed.fa > ${o}_failedtranscripts.fa
 	cd ..
