@@ -60,4 +60,4 @@ $(name)_BBT.bf: $(seed).fai  $(pe1) $(pe2)
 		
 #filter PET reads with built BF
 $(name).recruited_pe.fastq: $(name)_BBT.bf $(pe1) $(pe2)
-	biobloomcategorizer -p $(name)_BBT -t $j -d -f $(name)_BBT.bf -s $s -e -i <(zcat -f -- $(pe1)) <(zcat -f -- $(pe2)) >> $@	
+	biobloomcategorizer -p $(name)_BBT -t $j -d $(name)_BBT -f $(name)_BBT.bf -s $s -e -i <(zcat -f -- $(pe1)) <(zcat -f -- $(pe2)) >> $@	
