@@ -50,6 +50,7 @@ deps:
 	@echo $(brew_deps)
 
 install-deps:
+	brew tap brewsci/bio
 	brew install $(brew_deps)
 
 #Download genomic reads from NCBI
