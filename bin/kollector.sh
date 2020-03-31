@@ -98,6 +98,23 @@ seed=$1; shift;
 pet1=$1; shift;
 pet2=$1; shift;
 
+# Support for MacOS: 
+#   - BSD's time command does not have the format option
+#   - there is no `free` program for checking the swap space
+#   - `du` is also different on Darwin
+# If `uname -a` indicates Darwin, set programs that work for MacOS
+timer="/usr/bin/time"
+du="du"
+free='free -m | awk '"'"'NR==3{print $3}'"'"
+
+OS=$(uname -s)
+if [ "$OS" == "Darwin" ] ; then
+  echo Found MacOS
+  timer="gtime"
+  du="gdu"
+  free='sysctl vm.swapusage | gawk '"'"'match($0, /used = ([0-9]+)\.[0-9]+[GMBK]/,m) {print m[1]}'"'"
+fi
+
 #------------------------------------------------------------
 # Helper functions
 #------------------------------------------------------------
@@ -111,7 +128,7 @@ function heading() {
 
 # track peak disk space usage
 function update_peak_disk_usage() {
-	disk_usage=$(du -sb | cut -f1)
+	disk_usage=$($du -sb | cut -f1)
 	if [ $disk_usage -gt $peak_disk_usage ]; then
 		peak_disk_usage=$disk_usage
 	fi
@@ -122,12 +139,12 @@ function start_mem_logging() {
 	peak_mem_file=$prefix.peak-mem-mb.txt
 	rm -f $peak_mem_file
 	(
-		base_mem=$(free -m | awk 'NR==3{print $3}')
+    base_mem=$(eval $free)
 		peak_mem=$base_mem
 		trap 'echo $(($peak_mem - $base_mem)) > $peak_mem_file; exit $?' \
 			EXIT INT TERM KILL
 		while true; do
-			mem=$(free -m | awk 'NR==3{print $3}')
+      mem=$(eval $free)
 			if [ $mem -gt $peak_mem ]; then peak_mem=$mem; fi
 			sleep 1
 		done
@@ -145,7 +162,7 @@ function stop_mem_logging() {
 # log the real elapsed time for a command
 function time_command() {
 	script_name=$(basename $0)
-	/usr/bin/time -f "=> $script_name: %e %C" "$@"
+	$timer -f "=> $script_name: %e %C" "$@"
 }
 
 #------------------------------------------------------------

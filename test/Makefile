@@ -38,10 +38,19 @@ curl: \
 
 brew_deps= samtools biobloomtools abyss gmap-gsnap bwa
 
+# check if not windows
+ifneq ($(OS),Windows_NT)
+	UNAME_S := $(shell uname -s)
+	ifeq ($(UNAME_S),Darwin)
+    brew_deps += gnu-time gawk coreutils
+  endif
+endif
+
 deps:
 	@echo $(brew_deps)
 
 install-deps:
+	brew tap brewsci/bio
 	brew install $(brew_deps)
 
 #Download genomic reads from NCBI

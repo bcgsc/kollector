@@ -40,6 +40,16 @@ brew install abyss
 
 To see an simple example for running Kollector please see the `Example` section below.
 
+#### MacOS Support
+Running Kollector on MacOS requires some additional dependencies.  In particular,
+it requires the GNU versions of `awk`, `du`, and `time`.
+
+Installing these dependencies can be done with homebrew:
+
+```{bash}
+brew install coreutils gawk gnu-time
+```
+
 ## Running Kollector
 
 Kollector consists of three bash scripts:
