@@ -46,7 +46,6 @@ set -eu -o pipefail
 #------------------------------------------------------------
 
 # default values for options
-B=0
 align=0
 evaluate=0
 j=1
