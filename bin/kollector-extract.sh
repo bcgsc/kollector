@@ -31,15 +31,24 @@ cut -f10 allcleanmapped.sam>allseq.txt
 paste allcigars.txt allseq.txt >allcigarseq.txt
 rm allcigars.txt
 rm allseq.txt
-while read name 
-do
-num1=$(echo $name|cut -f1 -d " "|grep -o "[0-9]*M"|grep -o "[0-9]*"|xargs | tr ' ' + | bc)
-num2=$(echo $name|cut -f2 -d " "|wc -c)
-num3=$(echo $name|cut -f1 -d " "|grep -o "[0-9]*H"|grep -o "[0-9]*"|xargs | tr ' ' + | bc)
-if [ -z $num3 ];then num3=0;fi
-num4=$(echo "$num3+$num2"|bc)
-echo "scale=2;$num1/$num4"|bc
-done<allcigarseq.txt>allcoverages.txt
+
+awk '
+{
+        n1 = n2 = n3 = 0
+        a=$1
+        while(match(a, "[0-9]+M") != 0){
+                n1 += substr(a, RSTART, RLENGTH-1)
+                a = substr(a, RSTART+RLENGTH)
+        }
+        a=$1
+        while(match(a, "[0-9]+H") != 0){
+                n3 += substr(a, RSTART, RLENGTH-1)
+                a = substr(a, RSTART+RLENGTH)
+        }
+        n2 = length($2)
+        print n1 / (n2 + n3)
+}' <allcigarseq.txt >allcoverages.txt
+
 paste allcoverages.txt allcleanmapped.sam > allcoveredmapped.sam
 awk '{ if ($1>=0.90) print $2,$4;}' allcoveredmapped.sam > $1_hitlist.txt
 rm allcoveredmapped.sam allcleanmapped.sam allcigarseq.txt allcoverages.txt allnames.txt
